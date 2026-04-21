@@ -162,11 +162,11 @@ export default function App() {
                 muted 
                 loop 
                 playsInline 
-                poster={t.hero.image}
                 className="w-full h-full object-cover"
+                poster={t.hero.image}
               >
+                <source src="https://cdn.pixabay.com/video/2017/01/05/7112-198188164_large.mp4" type="video/mp4" />
                 <source src="/hero-bg.webm" type="video/webm" />
-                {/* Fallback image if video fails to load is handled by the poster and CSS */}
               </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
               <div className="absolute inset-0 bg-gradient-to-b from-pearl/40 via-transparent to-pearl" />
