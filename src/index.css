@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cinzel", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-ocean: #004B63;
+  --color-gold: #D4AF37;
+  --color-pearl: #F9F7F2;
+  --color-charcoal: #333333;
+  --color-cream-dark: #E5E0D5;
+}
+
+@layer base {
+  body {
+    @apply bg-pearl text-charcoal font-sans antialiased selection:bg-gold selection:text-white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-charcoal;
+  }
+}
+
+@layer utilities {
+  .text-shadow-subtle {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mask-gradient-light {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
