@@ -9,7 +9,7 @@ export const translations = {
       reservations: "Reservas"
     },
     hero: {
-      subtitle: "Boutique Experience",
+      subtitle: "Restaurant Boutique",
       title: "Cocina de autor",
       titleAccent: "con excelencia",
       ctaReserve: "Reservar Mesa",
@@ -88,7 +88,7 @@ export const translations = {
       reservations: "Reservations"
     },
     hero: {
-      subtitle: "Boutique Experience",
+      subtitle: "Restaurant Boutique",
       title: "Signature Cuisine",
       titleAccent: "with excellence",
       ctaReserve: "Book a Table",
