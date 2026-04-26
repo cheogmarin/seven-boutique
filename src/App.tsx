@@ -162,6 +162,7 @@ export default function App() {
                 muted 
                 loop 
                 playsInline 
+                key="hero-video"
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
               >
