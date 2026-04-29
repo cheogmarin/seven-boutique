@@ -58,22 +58,22 @@ export const translations = {
             {
               name: "Entradas",
               items: [
-                { name: "Tiradito de Pulpo", price: "$22.64", image: "https://images.unsplash.com/photo-1534604973900-c41ab4c3c3c0?q=80&w=200&auto=format&fit=crop" },
-                { name: "Carpaccio de Mero", price: "$18.50", image: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=200&auto=format&fit=crop" }
+                { name: "Tiradito de Pulpo", price: "$22.64", description: "Láminas de pulpo aderezadas con cítricos y especias orientales.", image: "https://images.unsplash.com/photo-1534604973900-c41ab4c3c3c0?q=80&w=200&auto=format&fit=crop" },
+                { name: "Carpaccio de Mero", price: "$18.50", description: "Delicadas piezas de mero con aceite de oliva trufado y alcaparras.", image: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
               name: "Mar",
               items: [
-                { name: "Pulpo al Grill", price: "$44.10", image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp" },
-                { name: "Langosta del Canal", price: "$55.00", image: "https://images.unsplash.com/photo-1559740038-191f4505f737?q=80&w=200&auto=format&fit=crop" }
+                { name: "Pulpo al Grill", price: "$44.10", description: "Sellado con paprika, pesto de curry verde, salsa anguila y crotones de tocineta.", image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp" },
+                { name: "Langosta del Canal", price: "$55.00", description: "Langosta fresca del día cocinada a la mantequilla de finas hierbas.", image: "https://images.unsplash.com/photo-1559740038-191f4505f737?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
               name: "Aves y Carnes",
               items: [
-                { name: "Lomito Pimienta", price: "$34.80", image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop" },
-                { name: "Pollo Orgánico al Romero", price: "$28.00", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=200&auto=format&fit=crop" }
+                { name: "Lomito Pimienta", price: "$34.80", description: "Corte premium a la pimienta negra con reducción de vino tinto.", image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop" },
+                { name: "Pollo Orgánico al Romero", price: "$28.00", description: "Pechuga de pollo de libre pastoreo con aroma a romero fresco y puré sedoso.", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
@@ -94,9 +94,9 @@ export const translations = {
             {
               name: "Pastelería",
               items: [
-                { name: "Torta Tronchatoro", price: "$8.00", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
-                { name: "Cheesecake Clásico", price: "$8.00", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
-                { name: "Cheesecake de Arándanos", price: "$8.50", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
+                { name: "Torta Tronchatoro", price: "$8.00", description: "Nuestra famosa torta de chocolate húmeda con capas de fudge artesanal.", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
+                { name: "Cheesecake Clásico", price: "$8.00", description: "Suave crema de queso sobre base crujiente de galleta.", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
+                { name: "Cheesecake de Arándanos", price: "$8.50", description: "Cheesecake tradicional coronado con compota de arándanos frescos.", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
@@ -206,22 +206,22 @@ export const translations = {
             {
               name: "Starters",
               items: [
-                { name: "Octopus Tiradito", price: "$22.64", image: "https://images.unsplash.com/photo-1534604973900-c41ab4c3c3c0?q=80&w=200&auto=format&fit=crop" },
-                { name: "Grouper Carpaccio", price: "$18.50", image: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=200&auto=format&fit=crop" }
+                { name: "Octopus Tiradito", price: "$22.64", description: "Thinly sliced octopus seasoned with citrus and oriental spices.", image: "https://images.unsplash.com/photo-1534604973900-c41ab4c3c3c0?q=80&w=200&auto=format&fit=crop" },
+                { name: "Grouper Carpaccio", price: "$18.50", description: "Delicate grouper pieces with truffled olive oil and capers.", image: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
               name: "Sea",
               items: [
-                { name: "Grilled Octopus", price: "$44.10", image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp" },
-                { name: "Channel Lobster", price: "$55.00", image: "https://images.unsplash.com/photo-1559740038-191f4505f737?q=80&w=200&auto=format&fit=crop" }
+                { name: "Grilled Octopus", price: "$44.10", description: "Seared with paprika, green curry pesto, eel sauce, and bacon croutons.", image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp" },
+                { name: "Channel Lobster", price: "$55.00", description: "Daily fresh lobster cooked with fine herbs butter.", image: "https://images.unsplash.com/photo-1559740038-191f4505f737?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
               name: "Poultry & Meat",
               items: [
-                { name: "Pepper Tenderloin", price: "$34.80", image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop" },
-                { name: "Organic Rosemary Chicken", price: "$28.00", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=200&auto=format&fit=crop" }
+                { name: "Pepper Tenderloin", price: "$34.80", description: "Premium cut with black pepper and red wine reduction.", image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=200&auto=format&fit=crop" },
+                { name: "Organic Rosemary Chicken", price: "$28.00", description: "Free-range chicken breast with fresh rosemary aroma and silky puree.", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {
@@ -242,9 +242,9 @@ export const translations = {
             {
               name: "Pastry",
               items: [
-                { name: "Tronchatoro Cake", price: "$8.00", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
-                { name: "Classic Cheesecake", price: "$8.00", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
-                { name: "Blueberry Cheesecake", price: "$8.50", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
+                { name: "Tronchatoro Cake", price: "$8.00", description: "Our famous moist chocolate cake with layers of artisan fudge.", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
+                { name: "Classic Cheesecake", price: "$8.00", description: "Smooth cream cheese on a crispy cookie base.", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
+                { name: "Blueberry Cheesecake", price: "$8.50", description: "Traditional cheesecake topped with fresh blueberry compote.", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
               ]
             },
             {

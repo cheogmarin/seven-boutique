@@ -6,6 +6,7 @@ import { translations, Language } from "./translations";
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenuCategory, setActiveMenuCategory] = useState<string | null>(null);
+  const [selectedPlate, setSelectedPlate] = useState<any>(null);
   const [lang, setLang] = useState<Language>('es');
   const heroRef = useRef<HTMLElement>(null);
 
@@ -406,7 +407,14 @@ export default function App() {
                                     </h5>
                                     <div className="space-y-10">
                                       {section.items.map((item: any, iIdx: number) => (
-                                        <div key={iIdx} className="flex gap-4 group/item">
+                                        <div 
+                                          key={iIdx} 
+                                          className="flex gap-4 group/item cursor-pointer"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedPlate(item);
+                                          }}
+                                        >
                                           <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-gold/20 p-1 bg-dark-graphite">
                                             <div className="w-full h-full rounded-full overflow-hidden">
                                               <img 
@@ -425,7 +433,7 @@ export default function App() {
                                               <span className="text-gold font-display text-sm">{item.price}</span>
                                             </div>
                                             <p className="text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
-                                              Selección Premium
+                                              {item.description ? (item.description.length > 40 ? item.description.substring(0, 40) + "..." : item.description) : "Selección Premium"}
                                             </p>
                                           </div>
                                         </div>
@@ -516,6 +524,84 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
     </main>
+
+    {/* Plate Detail Modal */}
+    <AnimatePresence>
+      {selectedPlate && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPlate(null)}
+            className="absolute inset-0 bg-dark-graphite/95 backdrop-blur-xl"
+          />
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative w-full max-w-5xl bg-pearl rounded-sm overflow-hidden shadow-2xl flex flex-col md:flex-row"
+          >
+            <button 
+              onClick={() => setSelectedPlate(null)}
+              className="absolute top-4 right-4 z-10 p-4 text-charcoal hover:text-gold transition-colors bg-pearl/80 backdrop-blur rounded-full shadow-lg"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Product Image */}
+            <div className="w-full md:w-3/5 aspect-square md:aspect-auto h-[40vh] md:h-auto overflow-hidden">
+              <motion.img 
+                layoutId={`plate-image-${selectedPlate.name}`}
+                src={selectedPlate.image} 
+                alt={selectedPlate.name}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+
+            {/* Product Info */}
+            <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-pearl">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="space-y-8"
+              >
+                <div>
+                  <h2 className="text-gold font-script text-4xl md:text-5xl mb-4">
+                    Signature Plate
+                  </h2>
+                  <h3 className="text-3xl md:text-4xl font-display font-bold text-charcoal leading-tight">
+                    {selectedPlate.name}
+                  </h3>
+                </div>
+
+                <div className="w-12 h-[1px] bg-gold" />
+
+                <p className="text-lg text-charcoal/80 leading-relaxed font-medium">
+                  {selectedPlate.description || "Una creación excepcional de nuestro Chef Ramos, diseñada para deleitar los sentidos."}
+                </p>
+
+                <div className="pt-8">
+                  <span className="text-3xl font-display text-gold">{selectedPlate.price}</span>
+                </div>
+
+                <div className="pt-12">
+                  <button 
+                    onClick={() => setSelectedPlate(null)}
+                    className="w-full py-4 border border-gold text-gold font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-white transition-all duration-500 rounded-sm shadow-xl"
+                  >
+                    {lang === 'es' ? 'Volver al Menú' : 'Return to Menu'}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
 
     </div>
   );
