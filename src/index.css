@@ -1,15 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&family=Pinyon+Script&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-display: "Cinzel", serif;
   --font-sans: "Inter", sans-serif;
+  --font-script: "Pinyon Script", cursive;
   
   --color-ocean: #004B63;
   --color-gold: #D4AF37;
   --color-pearl: #F9F7F2;
   --color-charcoal: #333333;
   --color-cream-dark: #E5E0D5;
+  --color-dark-graphite: #121212;
+  --color-chocolate: #3D2B1F;
 }
 
 @layer base {

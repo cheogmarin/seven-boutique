@@ -5,19 +5,15 @@ import { translations, Language } from "./translations";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isPremiumMenuOpen, setIsPremiumMenuOpen] = useState(false);
+  const [activeMenuCategory, setActiveMenuCategory] = useState<string | null>(null);
   const [lang, setLang] = useState<Language>('es');
   const heroRef = useRef<HTMLElement>(null);
 
   const t = translations[lang];
 
   useEffect(() => {
-    if (isPremiumMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [isPremiumMenuOpen]);
+    // No special body overflow needed for premium menu anymore
+  }, []);
 
   const { scrollY } = useScroll();
   
@@ -131,7 +127,10 @@ export default function App() {
             <span className="text-[8px] uppercase tracking-widest font-bold">{t.nav.essence.split(' ')[1] || t.nav.essence}</span>
           </a>
           <button 
-            onClick={() => setIsPremiumMenuOpen(true)}
+            onClick={() => {
+              const el = document.getElementById('menu');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="text-charcoal flex flex-col items-center gap-1 min-h-[44px] justify-center"
           >
             <Anchor size={20} className="text-gold" />
@@ -210,7 +209,10 @@ export default function App() {
                   {t.hero.ctaReserve}
                 </a>
                 <button 
-                  onClick={() => setIsPremiumMenuOpen(true)}
+                  onClick={() => {
+                    const el = document.getElementById('menu');
+                    el?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="px-10 py-4 border border-gold/30 text-charcoal font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-white transition-all duration-500 min-h-[44px] flex items-center justify-center"
                 >
                   {t.hero.ctaMenu}
@@ -320,65 +322,137 @@ export default function App() {
             </div>
           </section>
 
-          {/* Menú Signature & Gelatería */}
-          <section id="menu" className="py-24 px-6 bg-pearl">
+          {/* Menú Signature & Luxury Experience */}
+          <section id="menu" className="py-32 px-6 bg-dark-graphite text-white overflow-hidden">
             <div className="max-w-7xl mx-auto">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                <div>
-                  <h2 className="text-gold text-xs uppercase tracking-[0.6em] mb-4 font-bold">{t.menu.subtitle}</h2>
-                  <h3 className="text-3xl md:text-6xl font-display font-bold text-charcoal leading-relaxed">{t.menu.title}</h3>
-                </div>
-                <p className="text-charcoal/40 text-[10px] uppercase tracking-[0.3em] max-w-xs font-semibold leading-loose">
-                  {t.menu.description}
-                </p>
+              <div className="text-center mb-24">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <h2 className="text-gold text-xs uppercase tracking-[0.8em] mb-6 font-bold">{t.menu.subtitle}</h2>
+                  <h3 className="text-4xl md:text-7xl font-display font-bold text-white mb-8 tracking-widest leading-tight">
+                    {t.menu.title}
+                  </h3>
+                  <div className="w-24 h-[1px] bg-gold mx-auto mb-8" />
+                  <p className="text-white/40 text-xs uppercase tracking-[0.4em] max-w-xl mx-auto font-medium leading-relaxed">
+                    {t.menu.description}
+                  </p>
+                </motion.div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gold/10 border border-gold/10">
-                {t.menu.items.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group relative bg-pearl p-8 md:p-12 overflow-hidden flex flex-col md:flex-row gap-8"
-                  >
-                    {item.image && (
-                      <div className="w-full md:w-32 h-32 shrink-0 overflow-hidden shadow-lg border border-gold/10">
-                        <img 
-                          src={item.image} 
-                          alt={item.title} 
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          referrerPolicy="no-referrer"
-                        />
-                      </div>
-                    )}
-                    <div className="flex-1">
-                      <div className="relative z-10 flex justify-between items-start mb-4">
-                      <div>
-                        <span className="text-[10px] text-gold uppercase tracking-[0.4em] mb-2 block font-bold">{item.category}</span>
-                        <h4 className="text-xl md:text-3xl font-display text-charcoal group-hover:text-gold transition-colors duration-500 leading-relaxed">{item.title}</h4>
-                      </div>
-                      {item.price && (
-                        <span className="text-xl font-display text-gold">
-                          {item.price}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <motion.p 
-                      initial={{ opacity: 0, y: 10 }}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {Object.entries(t.menu.categories).map(([key, cat]: [string, any], index) => {
+                  const isActive = activeMenuCategory === key;
+                  
+                  return (
+                    <motion.div
+                      key={key}
+                      layout
+                      initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="text-sm text-charcoal/50 leading-loose tracking-wide transition-all duration-500 group-hover:text-charcoal/80"
+                      transition={{ delay: index * 0.1 }}
+                      className={`relative group cursor-pointer overflow-hidden border border-gold/10 bg-dark-graphite transition-all duration-700 ${
+                        isActive ? "md:col-span-3 h-auto" : "h-[60vh] hover:border-gold/30"
+                      }`}
+                      onClick={() => setActiveMenuCategory(isActive ? null : key)}
                     >
-                      {item.ingredients}
-                    </motion.p>
-                    </div>
+                      {/* Background Visual */}
+                      <div className={`absolute inset-0 transition-transform duration-1000 ${isActive ? "opacity-20 blur-sm" : "group-hover:scale-105"}`}>
+                        <img 
+                          src={cat.image} 
+                          alt={cat.title} 
+                          className="w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className={`absolute inset-0 bg-dark-graphite/60 transition-colors duration-500 ${isActive ? "bg-dark-graphite/90" : ""}`} />
+                        <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
+                      </div>
 
-                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-                  </motion.div>
-                ))}
+                      {/* Content Overlay */}
+                      <div className={`relative z-10 p-12 h-full flex flex-col ${isActive ? "justify-start" : "justify-center text-center"}`}>
+                        <motion.span 
+                          layout 
+                          className="text-gold font-script text-4xl md:text-5xl mb-4 block"
+                        >
+                          {cat.title}
+                        </motion.span>
+                        <motion.h4 
+                          layout
+                          className="text-xl md:text-2xl font-display tracking-[0.2em] mb-4 text-white"
+                        >
+                          {cat.subtitle}
+                        </motion.h4>
+                        {!isActive && (
+                          <div className="h-4" />
+                        )}
+
+                        {/* Expanded Menu Detail */}
+                        <AnimatePresence>
+                          {isActive && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="mt-12 overflow-hidden"
+                            >
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                                {cat.sections.map((section: any, sIdx: number) => (
+                                  <div key={sIdx} className="space-y-8">
+                                    <h5 className="text-white bg-gold/10 px-4 py-2 inline-block text-[10px] uppercase tracking-[0.4em] font-black rounded-sm border-l-2 border-gold">
+                                      {section.name}
+                                    </h5>
+                                    <div className="space-y-10">
+                                      {section.items.map((item: any, iIdx: number) => (
+                                        <div key={iIdx} className="flex gap-4 group/item">
+                                          <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-gold/20 p-1 bg-dark-graphite">
+                                            <div className="w-full h-full rounded-full overflow-hidden">
+                                              <img 
+                                                src={item.image} 
+                                                alt={item.name} 
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-110"
+                                                referrerPolicy="no-referrer"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div className="flex-1 border-b border-gold/5 pb-4">
+                                            <div className="flex justify-between items-baseline mb-1">
+                                              <h6 className="text-xs uppercase tracking-[0.1em] text-white font-bold group-hover/item:text-gold transition-colors">
+                                                {item.name}
+                                              </h6>
+                                              <span className="text-gold font-display text-sm">{item.price}</span>
+                                            </div>
+                                            <p className="text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
+                                              Selección Premium
+                                            </p>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        {/* Interactive Hint */}
+                        <motion.div 
+                          className={`mt-12 flex justify-center text-gold transition-opacity duration-500 ${isActive ? "opacity-0" : "opacity-100"}`}
+                        >
+                          <div className="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center animate-bounce">
+                            <Anchor size={16} />
+                          </div>
+                        </motion.div>
+                      </div>
+                      
+                      {/* Border Glow */}
+                      <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/10 transition-colors pointer-events-none" />
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -443,80 +517,6 @@ export default function App() {
       </AnimatePresence>
     </main>
 
-      {/* Premium Full-Screen Menu Overlay */}
-      <AnimatePresence>
-        {isPremiumMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-pearl flex flex-col items-center justify-center p-12 overflow-y-auto"
-          >
-            <button 
-              onClick={() => setIsPremiumMenuOpen(false)}
-              className="absolute top-8 right-8 text-charcoal hover:text-gold transition-colors p-4"
-            >
-              <X size={32} />
-            </button>
-
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="w-full max-w-4xl text-center"
-            >
-              <span className="text-gold text-xs uppercase tracking-[0.8em] font-bold mb-8 block">
-                {t.menu.subtitle}
-              </span>
-              <h2 className="text-5xl md:text-8xl font-display font-bold text-charcoal mb-24 tracking-tighter">
-                {t.menu.title}
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12 text-left">
-                {t.menu.items.map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + idx * 0.05 }}
-                    className="group border-b border-gold/10 pb-6"
-                  >
-                    <div className="flex justify-between items-baseline mb-2">
-                       <h4 className="text-2xl font-display text-charcoal group-hover:text-gold transition-colors">
-                        {item.title}
-                      </h4>
-                      <span className="text-gold font-display">{item.price}</span>
-                    </div>
-                    <p className="text-xs text-charcoal/50 uppercase tracking-[0.2em] font-medium leading-relaxed">
-                      {item.ingredients}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="mt-24 pt-12 border-t border-gold/10 flex flex-col items-center gap-8"
-              >
-                <img 
-                  src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
-                  alt="Seven Logo" 
-                  className="w-20 h-20 object-contain"
-                  referrerPolicy="no-referrer"
-                />
-                <a 
-                  href={whatsappUrl}
-                  className="bg-gold text-white px-12 py-5 text-xs uppercase tracking-[0.3em] font-bold hover:bg-charcoal transition-all shadow-xl"
-                >
-                  {t.hero.ctaReserve}
-                </a>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
