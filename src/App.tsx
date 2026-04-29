@@ -166,7 +166,7 @@ export default function App() {
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
               >
-                <source src="/hero-bg.webm" type="video/webm" />
+                <source src="/hero-bg.mp4" type="video/mp4" />
                 <source src="https://cdn.pixabay.com/video/2017/01/05/7112-198188164_large.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
