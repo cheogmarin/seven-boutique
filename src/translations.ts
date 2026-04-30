@@ -53,7 +53,7 @@ export const translations = {
           subtitle: "Cocina de Autor - Chef Francisco Ramos",
           description: "La cumbre de la gastronomía costera.",
           price: "$44.10",
-          image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp",
+          image: "https://i.ibb.co/6RY17xJd/chef.webp",
           sections: [
             {
               name: "Entradas y Ensaladas",
@@ -122,7 +122,7 @@ export const translations = {
           subtitle: "Gelatería Boutique",
           description: "Fresco, artesanal y equilibrado.",
           price: "Desde $8.00",
-          image: "https://i.ibb.co/0R05bchL/helados-implementos.webp",
+          image: "https://i.ibb.co/9k0DhKR6/helado-mujer1.webp",
           sections: [
             {
               name: "Gelatos Tradicionales",
@@ -147,15 +147,15 @@ export const translations = {
     footer: {
       description: "Una oda al mar y a la alta gastronomía. Experimente el lujo costero en su máxima expresión.",
       location: "Ubicación",
-      address: "Lechería 6016, Anzoátegui. Dentro del hotel Maremares, Paseo Marítimo, 77",
-      phone: "0412-8388203",
+      address: "Hotel Maremares, Paseo Marítimo, 77",
+      phone: "+584248050740",
       hours: "Horarios",
       days: "Lun - Dom: 12:00 PM - 12:00 AM",
       valetTitle: "Valet Parking",
       valetFriSat: "Vie - Sáb: 4:00 PM - 1:30 AM",
       valetSun: "Dom: 12:00 PM - 6:00 PM",
-      closed: "Abierto todos los días frente al canal",
-      rights: "© 2026 Esencia Boutique. Elegancia costera.",
+      closed: "Abierto todos los días frente al canal de navegación",
+      rights: "© 2026 Lechería 6016, Anzoátegui.",
       privacy: "Privacidad",
       terms: "Términos",
       whatsappMessage: "Hola, me gustaría realizar una reserva en Esencia Boutique."
@@ -213,7 +213,7 @@ export const translations = {
           subtitle: "Signature Cuisine - Chef Francisco Ramos",
           description: "The pinnacle of coastal gastronomy.",
           price: "$44.10",
-          image: "https://i.ibb.co/PvZFwT96/PULPO-AL-GRILL.webp",
+          image: "https://i.ibb.co/6RY17xJd/chef.webp",
           sections: [
             {
               name: "Starters and Salads",
@@ -282,7 +282,7 @@ export const translations = {
           subtitle: "Boutique Gelateria",
           description: "Fresh, handmade, and balanced.",
           price: "From $8.00",
-          image: "https://i.ibb.co/0R05bchL/helados-implementos.webp",
+          image: "https://i.ibb.co/9k0DhKR6/helado-mujer1.webp",
           sections: [
             {
               name: "Traditional Gelatos",
@@ -307,15 +307,15 @@ export const translations = {
     footer: {
       description: "An ode to the sea and haute cuisine. Experience coastal luxury at its finest.",
       location: "Location",
-      address: "Lechería 6016, Anzoátegui. Inside the Maremares Hotel, Promenade, 77",
-      phone: "0412-8388203",
+      address: "Hotel Maremares, Paseo Marítimo, 77",
+      phone: "+584248050740",
       hours: "Opening Hours",
       days: "Mon - Sun: 12:00 PM - 12:00 AM",
       valetTitle: "Valet Parking",
       valetFriSat: "Fri - Sat: 4:00 PM - 1:30 AM",
       valetSun: "Sun: 12:00 PM - 6:00 PM",
-      closed: "Open every day by the canal",
-      rights: "© 2026 Esencia Boutique. Coastal elegance.",
+      closed: "Open every day by the navigation canal",
+      rights: "© 2026 Lechería 6016, Anzoátegui.",
       privacy: "Privacy",
       terms: "Terms",
       whatsappMessage: "Hello, I would like to make a reservation at Esencia Boutique."
