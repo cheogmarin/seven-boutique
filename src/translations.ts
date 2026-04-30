@@ -102,18 +102,17 @@ export const translations = {
             {
               name: "Pastelería",
               items: [
-                { name: "Torta Tronchatoro", price: "$8.00", description: "Nuestra famosa torta de chocolate húmeda con capas de fudge artesanal.", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
-                { name: "Cheesecake Neoyorquino", price: "$8.00", description: "Clásico estilo New York, denso y cremoso con un toque de vainilla.", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
-                { name: "Quesillos", price: "$7.00", description: "Tradicional postre casero con caramelo ámbar y textura sedosa.", image: "https://images.unsplash.com/photo-1590080873114-1e0bc875b0ef?q=80&w=200&auto=format&fit=crop" }
+                { name: "Torta Tronchatoro", price: "$8.00", description: "Nuestra famosa torta de chocolate húmeda con capas de fudge artesanal.", image: "https://i.ibb.co/FkzfcrFy/Tronchatoro-1.webp" },
+                { name: "Cheesecake Neoyorquino", price: "$8.00", description: "Clásico estilo New York, denso y cremoso con un toque de vainilla.", image: "https://i.ibb.co/Xk2GT0kg/Cheesecake-Neoyorquino.webp" }
               ]
             },
             {
               name: "Barra de Cafés",
               items: [
-                { name: "Capuccino", price: "$4.50", description: "Equilibrio perfecto entre espresso, leche vaporizada y espuma.", image: "https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=200&auto=format&fit=crop" },
-                { name: "Latte Vainilla", price: "$5.00", description: "Espresso suave con leche cremosa y un toque de vainilla francesa.", image: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=200&auto=format&fit=crop" },
-                { name: "Mocaccino", price: "$5.50", description: "Fusión de chocolate premium, espresso y leche vaporizada.", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=200&auto=format&fit=crop" },
-                { name: "Americano", price: "$3.50", description: "Espresso diluido en agua caliente para un sabor prolongado y limpio.", image: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=200&auto=format&fit=crop" }
+                { name: "Capuccino", price: "$4.50", description: "Equilibrio perfecto entre espresso, leche vaporizada y espuma.", image: "https://i.ibb.co/hJJWk96P/capuchino.webp" },
+                { name: "Latte Vainilla", price: "$5.00", description: "Espresso suave con leche cremosa y un toque de vainilla francesa.", image: "https://i.ibb.co/pvBR8xPn/latte-v.webp" },
+                { name: "Mocaccino", price: "$5.50", description: "Fusión de chocolate premium, espresso y leche vaporizada.", image: "https://i.ibb.co/dwNpcrH6/mocaccino.webp" },
+                { name: "Americano", price: "$3.50", description: "Espresso diluido en agua caliente para un sabor prolongado y limpio.", image: "https://i.ibb.co/5xWYtzRs/americano.webp" }
               ]
             }
           ]
@@ -128,23 +127,16 @@ export const translations = {
             {
               name: "Gelatos Tradicionales",
               items: [
-                { name: "Pistacho", price: "$8.00", description: "Elaborado con pistachos seleccionados para un sabor auténtico.", image: "https://i.ibb.co/0R05bchL/helados-implementos.webp" },
-                { name: "Ferrero Rocher", price: "$8.00", description: "Cremoso gelato de avellanas con trozos de chocolate y barquillo.", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=200&auto=format&fit=crop" },
-                { name: "Vainilla Borbone", price: "$8.00", description: "Vainilla premium con notas florales y cremosidad extrema.", image: "https://images.unsplash.com/photo-1570197788417-0e2238d74eeb?q=80&w=200&auto=format&fit=crop" }
+                { name: "Pistacho", price: "$8.00", description: "Elaborado con pistachos seleccionados para un sabor auténtico.", image: "https://i.ibb.co/PvDCZLcQ/pistacho.png" },
+                { name: "Ferrero Rocher", price: "$8.00", description: "Producto premium que combina un cremoso helado de avellana con veteado de avellana y cacao, cubierto por una capa crujiente de chocolate con leche.", image: "https://i.ibb.co/23nPxyjX/producto.png" },
+                { name: "Vainilla Borbone", price: "$8.00", description: "Vainilla premium con notas florales y cremosidad extrema.", image: "https://i.ibb.co/Q7BVSJwn/vainilla.png" }
               ]
             },
             {
               name: "Línea Bienestar (Sin Azúcar y Veganos)",
               items: [
-                { name: "Gianduia (Vegano)", price: "$9.00", description: "Clásica mezcla de cacao y avellanas, libre de productos lácteos.", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=200&auto=format&fit=crop" },
-                { name: "Cheesecake de Arándanos (Sin Azúcar)", price: "$9.00", description: "Todo el sabor del cheesecake con arándanos frescos, sin azúcar añadida.", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
-              ]
-            },
-            {
-              name: "Sorbetes",
-              items: [
-                { name: "Fresa", price: "$7.50", description: "Sorbete refrescante elaborado con fresas naturales de temporada.", image: "https://images.unsplash.com/photo-1469122312224-c5846569efe1?q=80&w=200&auto=format&fit=crop" },
-                { name: "Parchita", price: "$7.50", description: "Explosión tropical de fruta de la pasión, ácida y refrescante.", image: "https://images.unsplash.com/photo-1517093157656-b99917c6471c?q=80&w=200&auto=format&fit=crop" }
+                { name: "Gianduia (Vegano)", price: "$9.00", description: "Clásico italiano, crema helada artesanal, libre de lácteos y derivados animales, combina intensamente chocolate y pasta de avellanas.", image: "https://i.ibb.co/HfBPDDHH/Gianduia-Vegano.webp" },
+                { name: "Cheesecake de Arándanos (Sin Azúcar)", price: "$9.00", description: "Todo el sabor del cheesecake con arándanos frescos, sin azúcar añadida.", image: "https://i.ibb.co/Nnnrk82C/arandano.png" }
               ]
             }
           ]
@@ -155,17 +147,18 @@ export const translations = {
     footer: {
       description: "Una oda al mar y a la alta gastronomía. Experimente el lujo costero en su máxima expresión.",
       location: "Ubicación",
-      address: "Paseo Marítimo, 77",
+      address: "Lechería 6016, Anzoátegui. Dentro del hotel Maremares, Paseo Marítimo, 77",
+      phone: "0412-8388203",
       hours: "Horarios",
-      days: "Lun - Dom: 12:00 - 00:00",
+      days: "Lun - Dom: 12:00 PM - 12:00 AM",
       valetTitle: "Valet Parking",
-      valetFriSat: "Vie - Sáb: 16:00 - 01:30",
-      valetSun: "Dom: 12:00 - 18:00",
+      valetFriSat: "Vie - Sáb: 4:00 PM - 1:30 AM",
+      valetSun: "Dom: 12:00 PM - 6:00 PM",
       closed: "Abierto todos los días frente al canal",
-      rights: "© 2026 Seven Boutique. Elegancia costera.",
+      rights: "© 2026 Esencia Boutique. Elegancia costera.",
       privacy: "Privacidad",
       terms: "Términos",
-      whatsappMessage: "Hola, me gustaría realizar una reserva en Seven Boutique."
+      whatsappMessage: "Hola, me gustaría realizar una reserva en Esencia Boutique."
     }
   },
   en: {
@@ -269,18 +262,17 @@ export const translations = {
             {
               name: "Pastry",
               items: [
-                { name: "Tronchatoro Cake", price: "$8.00", description: "Our famous moist chocolate cake with layers of artisan fudge.", image: "https://i.ibb.co/VYBXMK6r/Torta-De-Pi-a-Lim-n-Naranja-o-Marmoleada.webp" },
-                { name: "New York Cheesecake", price: "$8.00", description: "Classic New York style, dense and creamy with a hint of vanilla.", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=200&auto=format&fit=crop" },
-                { name: "Quesillos", price: "$7.00", description: "Traditional homemade dessert with amber caramel and silky texture.", image: "https://images.unsplash.com/photo-1590080873114-1e0bc875b0ef?q=80&w=200&auto=format&fit=crop" }
+                { name: "Tronchatoro Cake", price: "$8.00", description: "Our famous moist chocolate cake with layers of artisan fudge.", image: "https://i.ibb.co/FkzfcrFy/Tronchatoro-1.webp" },
+                { name: "New York Cheesecake", price: "$8.00", description: "Classic New York style, dense and creamy with a hint of vanilla.", image: "https://i.ibb.co/Xk2GT0kg/Cheesecake-Neoyorquino.webp" }
               ]
             },
             {
               name: "Coffee Bar",
               items: [
-                { name: "Capuccino", price: "$4.50", description: "Perfect balance between espresso, steamed milk, and foam.", image: "https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=200&auto=format&fit=crop" },
-                { name: "Vanilla Latte", price: "$5.00", description: "Smooth espresso with creamy milk and a touch of French vanilla.", image: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=200&auto=format&fit=crop" },
-                { name: "Mocaccino", price: "$5.50", description: "Fusion of premium chocolate, espresso, and steamed milk.", image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=200&auto=format&fit=crop" },
-                { name: "Americano", price: "$3.50", description: "Espresso diluted in hot water for a clean and prolonged flavor.", image: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?q=80&w=200&auto=format&fit=crop" }
+                { name: "Capuccino", price: "$4.50", description: "Perfect balance between espresso, steamed milk, and foam.", image: "https://i.ibb.co/hJJWk96P/capuchino.webp" },
+                { name: "Vanilla Latte", price: "$5.00", description: "Smooth espresso with creamy milk and a touch of French vanilla.", image: "https://i.ibb.co/pvBR8xPn/latte-v.webp" },
+                { name: "Mocaccino", price: "$5.50", description: "Fusion of premium chocolate, espresso, and steamed milk.", image: "https://i.ibb.co/dwNpcrH6/mocaccino.webp" },
+                { name: "Americano", price: "$3.50", description: "Espresso diluted in hot water for a clean and prolonged flavor.", image: "https://i.ibb.co/5xWYtzRs/americano.webp" }
               ]
             }
           ]
@@ -295,23 +287,16 @@ export const translations = {
             {
               name: "Traditional Gelatos",
               items: [
-                { name: "Pistachio", price: "$8.00", description: "Made with selected pistachios for an authentic flavor.", image: "https://i.ibb.co/0R05bchL/helados-implementos.webp" },
-                { name: "Ferrero Rocher", price: "$8.00", description: "Creamy hazelnut gelato with chocolate and wafer pieces.", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=200&auto=format&fit=crop" },
-                { name: "Vainilla Borbone", price: "$8.00", description: "Premium vanilla with floral notes and extreme creaminess.", image: "https://images.unsplash.com/photo-1570197788417-0e2238d74eeb?q=80&w=200&auto=format&fit=crop" }
+                { name: "Pistachio", price: "$8.00", description: "Made with selected pistachios for an authentic flavor.", image: "https://i.ibb.co/PvDCZLcQ/pistacho.png" },
+                { name: "Ferrero Rocher", price: "$8.00", description: "Premium product combining creamy hazelnut gelato with hazelnut and cocoa ripples, covered in a crunchy milk chocolate layer.", image: "https://i.ibb.co/23nPxyjX/producto.png" },
+                { name: "Vainilla Borbone", price: "$8.00", description: "Premium vanilla with floral notes and extreme creaminess.", image: "https://i.ibb.co/Q7BVSJwn/vainilla.png" }
               ]
             },
             {
               name: "Wellness Line (Sugar-Free & Vegan)",
               items: [
-                { name: "Gianduia (Vegan)", price: "$9.00", description: "Classic mix of cocoa and hazelnuts, free of dairy products.", image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=200&auto=format&fit=crop" },
-                { name: "Blueberry Cheesecake (Sugar-Free)", price: "$9.00", description: "All the cheesecake flavor with fresh blueberries, no added sugar.", image: "https://images.unsplash.com/photo-1505913413112-793b680cb86d?q=80&w=200&auto=format&fit=crop" }
-              ]
-            },
-            {
-              name: "Sorbets",
-              items: [
-                { name: "Strawberry", price: "$7.50", description: "Refreshing sorbet made with seasonal natural strawberries.", image: "https://images.unsplash.com/photo-1469122312224-c5846569efe1?q=80&w=200&auto=format&fit=crop" },
-                { name: "Passion Fruit", price: "$7.50", description: "Tropical explosion of passion fruit, tart and refreshing.", image: "https://images.unsplash.com/photo-1517093157656-b99917c6471c?q=80&w=200&auto=format&fit=crop" }
+                { name: "Gianduia (Vegan)", price: "$9.00", description: "Italian classic, artisanal ice cream, dairy-free and animal-derivative-free, intensely combining chocolate and hazelnut paste.", image: "https://i.ibb.co/HfBPDDHH/Gianduia-Vegano.webp" },
+                { name: "Blueberry Cheesecake (Sugar-Free)", price: "$9.00", description: "All the cheesecake flavor with fresh blueberries, no added sugar.", image: "https://i.ibb.co/Nnnrk82C/arandano.png" }
               ]
             }
           ]
@@ -322,17 +307,18 @@ export const translations = {
     footer: {
       description: "An ode to the sea and haute cuisine. Experience coastal luxury at its finest.",
       location: "Location",
-      address: "Promenade, 77",
+      address: "Lechería 6016, Anzoátegui. Inside the Maremares Hotel, Promenade, 77",
+      phone: "0412-8388203",
       hours: "Opening Hours",
-      days: "Mon - Sun: 12:00 - 00:00",
+      days: "Mon - Sun: 12:00 PM - 12:00 AM",
       valetTitle: "Valet Parking",
       valetFriSat: "Fri - Sat: 4:00 PM - 1:30 AM",
       valetSun: "Sun: 12:00 PM - 6:00 PM",
       closed: "Open every day by the canal",
-      rights: "© 2026 Seven Boutique. Coastal elegance.",
+      rights: "© 2026 Esencia Boutique. Coastal elegance.",
       privacy: "Privacy",
       terms: "Terms",
-      whatsappMessage: "Hello, I would like to make a reservation at Seven Boutique."
+      whatsappMessage: "Hello, I would like to make a reservation at Esencia Boutique."
     }
   }
 };

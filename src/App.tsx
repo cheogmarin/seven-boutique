@@ -26,7 +26,7 @@ export default function App() {
     setLang(newLang);
   };
 
-  const whatsappUrl = `https://wa.me/34900888000?text=${encodeURIComponent(t.footer.whatsappMessage)}`;
+  const whatsappUrl = `https://wa.me/584128388203?text=${encodeURIComponent(t.footer.whatsappMessage)}`;
 
   return (
     <div className="min-h-screen bg-pearl text-charcoal selection:bg-gold selection:text-white overflow-x-hidden pb-20 md:pb-0">
@@ -36,12 +36,12 @@ export default function App() {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-display font-bold tracking-[0.2em] text-charcoal flex items-center gap-2"
+            className="text-xl font-display font-bold tracking-[0.3em] text-charcoal flex items-center gap-2"
           >
             <img 
               src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
-              alt="Seven Logo" 
-              className="w-10 h-10 object-contain"
+              alt="Logo" 
+              className="w-8 h-8 object-contain"
               referrerPolicy="no-referrer"
             />
             SEVEN
@@ -123,9 +123,14 @@ export default function App() {
       {/* Sticky Bottom Nav (Mobile Only) */}
       <div className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-pearl/95 backdrop-blur-lg border-t border-gold/10 px-6 py-3 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <div className="flex items-center gap-6">
-          <a href="#la-esencia" className="text-charcoal flex flex-col items-center gap-1 min-h-[44px] justify-center">
-            <Waves size={20} className="text-gold" />
-            <span className="text-[8px] uppercase tracking-widest font-bold">{t.nav.essence.split(' ')[1] || t.nav.essence}</span>
+          <a href="#hero-stable" onClick={(e) => { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="text-charcoal flex flex-col items-center gap-1 min-h-[44px] justify-center">
+            <img 
+              src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
+              alt="Logo" 
+              className="w-5 h-5 object-contain"
+              referrerPolicy="no-referrer"
+            />
+            <span className="text-[8px] uppercase tracking-widest font-bold">SEVEN</span>
           </a>
           <button 
             onClick={() => {
@@ -470,14 +475,24 @@ export default function App() {
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
                 <div className="md:col-span-2">
-                  <div className="text-4xl font-display font-bold tracking-[0.2em] text-charcoal mb-8 flex items-center gap-2">
-                    <img 
-                      src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
-                      alt="Seven Logo" 
-                      className="w-14 h-14 object-contain"
-                      referrerPolicy="no-referrer"
-                    />
-                    SEVEN
+                  <div 
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="mb-8 flex items-center gap-4 cursor-pointer group"
+                  >
+                    <div className="p-2 border border-gold/20 rounded-full group-hover:border-gold group-hover:bg-gold/5 transition-all duration-500">
+                      <img 
+                        src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
+                        alt="Logo" 
+                        className="w-5 h-5 object-contain transition-transform duration-500 group-hover:scale-110"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="flex items-baseline text-charcoal uppercase font-display font-bold tracking-[0.4em] group-hover:text-gold transition-colors duration-500">
+                      <span className="text-4xl leading-none">E</span>
+                      <span className="text-xl">
+                        {lang === 'es' ? 'sencia' : 'ssence'}
+                      </span>
+                    </div>
                   </div>
                   <p className="text-charcoal/50 max-w-sm leading-loose tracking-widest text-[10px] uppercase font-semibold">
                     {t.footer.description}
@@ -488,7 +503,7 @@ export default function App() {
                   <h5 className="text-gold text-[10px] uppercase tracking-[0.4em] font-bold">{t.footer.location}</h5>
                   <ul className="space-y-4 text-sm text-charcoal/70 tracking-wide">
                     <li className="flex items-center gap-3"><MapPin size={16} className="text-gold" /> {t.footer.address}</li>
-                    <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> +34 900 888 000</li>
+                    <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> {t.footer.phone}</li>
                     <li className="flex items-center gap-3"><Instagram size={16} className="text-gold" /> @seven_seafront</li>
                   </ul>
                 </div>
@@ -528,30 +543,30 @@ export default function App() {
     {/* Plate Detail Modal */}
     <AnimatePresence>
       {selectedPlate && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+        <div className="fixed inset-0 z-[100] overflow-y-auto bg-dark-graphite/95 backdrop-blur-xl pt-4 pb-20 px-4 md:p-8 flex justify-center items-start md:items-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedPlate(null)}
-            className="absolute inset-0 bg-dark-graphite/95 backdrop-blur-xl"
+            className="fixed inset-0 cursor-pointer"
           />
           
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-5xl bg-pearl rounded-sm overflow-hidden shadow-2xl flex flex-col md:flex-row"
+            className="relative w-full max-w-5xl bg-pearl rounded-sm overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto z-10"
           >
             <button 
               onClick={() => setSelectedPlate(null)}
-              className="absolute top-4 right-4 z-10 p-4 text-charcoal hover:text-gold transition-colors bg-pearl/80 backdrop-blur rounded-full shadow-lg"
+              className="absolute top-4 right-4 z-20 p-4 text-charcoal hover:text-gold transition-colors bg-pearl/90 backdrop-blur-sm rounded-full shadow-lg"
             >
               <X size={24} />
             </button>
 
             {/* Product Image */}
-            <div className="w-full md:w-3/5 aspect-square md:aspect-auto h-[40vh] md:h-auto overflow-hidden">
+            <div className="w-full md:w-3/5 h-[35vh] md:h-auto overflow-hidden shrink-0">
               <motion.img 
                 layoutId={`plate-image-${selectedPlate.name}`}
                 src={selectedPlate.image} 
@@ -562,33 +577,33 @@ export default function App() {
             </div>
 
             {/* Product Info */}
-            <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-pearl">
+            <div className="w-full md:w-2/5 p-6 md:p-12 flex flex-col justify-center bg-pearl">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="space-y-8"
+                className="space-y-6 md:space-y-8"
               >
                 <div>
-                  <h2 className="text-gold font-script text-4xl md:text-5xl mb-4">
+                  <h2 className="text-gold font-script text-3xl md:text-5xl mb-2 md:mb-4">
                     Signature Plate
                   </h2>
-                  <h3 className="text-3xl md:text-4xl font-display font-bold text-charcoal leading-tight">
+                  <h3 className="text-2xl md:text-4xl font-display font-bold text-charcoal leading-tight">
                     {selectedPlate.name}
                   </h3>
                 </div>
 
                 <div className="w-12 h-[1px] bg-gold" />
 
-                <p className="text-lg text-charcoal/80 leading-relaxed font-medium">
+                <p className="text-base md:text-lg text-charcoal/80 leading-relaxed font-medium">
                   {selectedPlate.description || "Una creación excepcional de nuestro Chef Ramos, diseñada para deleitar los sentidos."}
                 </p>
 
-                <div className="pt-8">
-                  <span className="text-3xl font-display text-gold">{selectedPlate.price}</span>
+                <div className="pt-4 md:pt-8">
+                  <span className="text-2xl md:text-3xl font-display text-gold">{selectedPlate.price}</span>
                 </div>
 
-                <div className="pt-12">
+                <div className="pt-6 md:pt-12">
                   <button 
                     onClick={() => setSelectedPlate(null)}
                     className="w-full py-4 border border-gold text-gold font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-white transition-all duration-500 rounded-sm shadow-xl"
