@@ -183,11 +183,8 @@ export default function App() {
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
               >
-                {/* Local source first */}
+                {/* Local source */}
                 <source src="/hero-bg.mp4" type="video/mp4" />
-                {/* Stable external fallback */}
-                <source src="https://player.vimeo.com/external/494441018.sd.mp4?s=0183186ca1c41a4a4078832a875a6c1724cc62a4&profile_id=165" type="video/mp4" />
-                <source src="https://joy1.videvo.net/videvo_files/video/free/2019-11/large_watermarked/190828_27_Supermarket_05_preview.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
               <div className="absolute inset-0 bg-gradient-to-b from-pearl/40 via-transparent to-pearl" />
