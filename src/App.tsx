@@ -180,10 +180,11 @@ export default function App() {
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
               >
-                {/* Fallback external stable videos */}
-                <source src="https://v1.coverr.co/c095ec4a-39b0-449e-8c31-6e3e56a73c9f/1080p.mp4" type="video/mp4" />
-                <source src="https://player.vimeo.com/external/494441018.sd.mp4?s=0183186ca1c41a4a4078832a875a6c1724cc62a4&profile_id=165" type="video/mp4" />
+                {/* Local source first */}
                 <source src="/hero-bg.mp4" type="video/mp4" />
+                {/* Stable external fallback (Pexels shared CDN usually works better) */}
+                <source src="https://player.vimeo.com/external/494441018.sd.mp4?s=0183186ca1c41a4a4078832a875a6c1724cc62a4&profile_id=165" type="video/mp4" />
+                <source src="https://joy1.videvo.net/videvo_files/video/free/2019-11/large_watermarked/190828_27_Supermarket_05_preview.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
               <div className="absolute inset-0 bg-gradient-to-b from-pearl/40 via-transparent to-pearl" />
