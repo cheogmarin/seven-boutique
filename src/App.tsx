@@ -9,12 +9,19 @@ export default function App() {
   const [selectedPlate, setSelectedPlate] = useState<any>(null);
   const [lang, setLang] = useState<Language>('es');
   const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const t = translations[lang];
 
   useEffect(() => {
-    // No special body overflow needed for premium menu anymore
-  }, []);
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(error => {
+        console.error("Video play failed:", error);
+      });
+    }
+  }, [lang]); // Re-run if language changes just in case, though video is shared
 
   const { scrollY } = useScroll();
   
@@ -163,6 +170,7 @@ export default function App() {
               className="absolute inset-0 z-0 h-[120%]"
             >
               <video 
+                ref={videoRef}
                 autoPlay 
                 muted 
                 loop 
@@ -171,6 +179,7 @@ export default function App() {
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
               >
+                <source src="https://player.vimeo.com/external/434045526.sd.mp4?s=c27dbcc6a762746c9053c15ca8501726a4d70656&profile_id=164&oauth2_token_id=57447761" type="video/mp4" />
                 <source src="/hero-bg.mp4" type="video/mp4" />
                 <source src="https://cdn.pixabay.com/video/2017/01/05/7112-198188164_large.mp4" type="video/mp4" />
               </video>
