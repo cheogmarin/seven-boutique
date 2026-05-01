@@ -9,12 +9,21 @@ export default function App() {
   const [selectedPlate, setSelectedPlate] = useState<any>(null);
   const [lang, setLang] = useState<Language>('es');
   const heroRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const t = translations[lang];
 
   useEffect(() => {
     // Scroll to top on lang change or load
     window.scrollTo(0, 0);
+
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(error => {
+        console.error("Video play failed:", error);
+      });
+    }
   }, [lang]);
 
   const { scrollY } = useScroll();
@@ -163,16 +172,23 @@ export default function App() {
               style={{ y: yBg }}
               className="absolute inset-0 z-0 h-[120%]"
             >
-              <div className="absolute inset-0 z-0 h-[100%] overflow-hidden">
-                <iframe
-                  className="absolute top-1/2 left-1/2 w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                  src="https://www.youtube.com/embed/ZroiL4iZMhc?autoplay=1&mute=1&loop=1&playlist=ZroiL4iZMhc&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
-                  title="hero bg"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                ></iframe>
-              </div>
+              <video 
+                ref={videoRef}
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                preload="auto"
+                key="hero-video"
+                className="w-full h-full object-cover"
+                poster={t.hero.image}
+              >
+                {/* Local source first */}
+                <source src="/hero-bg.mp4" type="video/mp4" />
+                {/* Stable external fallback */}
+                <source src="https://player.vimeo.com/external/494441018.sd.mp4?s=0183186ca1c41a4a4078832a875a6c1724cc62a4&profile_id=165" type="video/mp4" />
+                <source src="https://joy1.videvo.net/videvo_files/video/free/2019-11/large_watermarked/190828_27_Supermarket_05_preview.mp4" type="video/mp4" />
+              </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
               <div className="absolute inset-0 bg-gradient-to-b from-pearl/40 via-transparent to-pearl" />
             </motion.div>
