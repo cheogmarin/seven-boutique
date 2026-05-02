@@ -17,13 +17,20 @@ export default function App() {
     // Scroll to top on lang change or load
     window.scrollTo(0, 0);
 
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(error => {
-        console.error("Video play failed:", error);
-      });
-    }
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          videoRef.current.defaultMuted = true;
+          videoRef.current.muted = true;
+          await videoRef.current.play();
+          console.log("Hero video playing successfully");
+        } catch (error) {
+          console.warn("Video auto-play failed, usually due to browser policy or invalid file:", error);
+        }
+      }
+    };
+
+    playVideo();
   }, [lang]);
 
   const { scrollY } = useScroll();
@@ -182,8 +189,11 @@ export default function App() {
                 key="hero-video"
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
+                onPlay={() => console.log("Hero video playing successfully")}
+                onCanPlay={() => console.log("Hero video can play")}
+                src="/hero-bg.mp4"
               >
-                {/* Local source */}
+                {/* Fallback for old browsers */}
                 <source src="/hero-bg.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
