@@ -17,23 +17,29 @@ export default function App() {
     // Scroll to top on lang change or load
     window.scrollTo(0, 0);
 
-    const playVideo = async () => {
-      if (videoRef.current) {
-        try {
-          videoRef.current.defaultMuted = true;
-          videoRef.current.muted = true;
-          await videoRef.current.play();
-          console.log("Hero video playing successfully");
-        } catch (error) {
-          console.warn("Video auto-play failed, usually due to browser policy or invalid file:", error);
-        }
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [lang]);
+
+  const { scrollY, scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  useEffect(() => {
+    const updateVideoTime = (v: number) => {
+      if (videoRef.current && videoRef.current.duration) {
+        // Use a small threshold to prevent jitter and ensure smooth scrub
+        const targetTime = v * videoRef.current.duration;
+        videoRef.current.currentTime = targetTime;
       }
     };
 
-    playVideo();
-  }, [lang]);
-
-  const { scrollY } = useScroll();
+    const unsubscribe = scrollYProgress.on("change", updateVideoTime);
+    return () => unsubscribe();
+  }, [scrollYProgress]);
   
   const yBg = useTransform(scrollY, [0, 800], ["0%", "25%"]);
   const yText = useTransform(scrollY, [0, 600], ["0px", "300px"]);
@@ -181,16 +187,13 @@ export default function App() {
             >
               <video 
                 ref={videoRef}
-                autoPlay 
                 muted 
-                loop 
                 playsInline 
                 preload="auto"
                 key="hero-video"
                 className="w-full h-full object-cover"
                 poster={t.hero.image}
-                onPlay={() => console.log("Hero video playing successfully")}
-                onCanPlay={() => console.log("Hero video can play")}
+                onContextMenu={(e) => e.preventDefault()}
                 src="/hero-bg.mp4"
               >
                 {/* Fallback for old browsers */}
