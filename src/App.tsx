@@ -13,6 +13,8 @@ export default function App() {
 
   const t = translations[lang];
 
+  const [isVideoReady, setIsVideoReady] = useState(false);
+
   useEffect(() => {
     // Scroll to top on lang change or load
     window.scrollTo(0, 0);
@@ -20,6 +22,12 @@ export default function App() {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      // Pre-warm the video decoder
+      videoRef.current.play().then(() => {
+        videoRef.current?.pause();
+      }).catch(() => {
+         // Silently fail if auto-play policy blocks it
+      });
     }
   }, [lang]);
 
@@ -30,12 +38,18 @@ export default function App() {
 
   useEffect(() => {
     const updateVideoTime = (v: number) => {
-      if (videoRef.current && videoRef.current.duration) {
-        // Use a small threshold to prevent jitter and ensure smooth scrub
-        const targetTime = v * videoRef.current.duration;
-        videoRef.current.currentTime = targetTime;
+      const video = videoRef.current;
+      if (video && video.duration) {
+        // Even if readyState is low, we try to set currentTime
+        const targetTime = v * video.duration;
+        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+          video.currentTime = targetTime;
+        }
       }
     };
+
+    // Initial sync
+    updateVideoTime(scrollYProgress.get());
 
     const unsubscribe = scrollYProgress.on("change", updateVideoTime);
     return () => unsubscribe();
@@ -183,24 +197,58 @@ export default function App() {
           <section key="hero-stable" ref={heroRef} className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
             <motion.div 
               style={{ y: yBg }}
-              className="absolute inset-0 z-0 h-[120%]"
+              className="absolute top-0 left-0 w-full h-[120%] z-0 bg-neutral-200"
             >
               <video 
                 ref={videoRef}
                 muted 
                 playsInline 
+                autoPlay
+                loop
                 preload="auto"
                 key="hero-video"
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover relative z-0 transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
                 poster={t.hero.image}
                 onContextMenu={(e) => e.preventDefault()}
-                src="/hero-bg.mp4"
+                onLoadedMetadata={(e) => {
+                  const v = e.currentTarget;
+                  v.pause(); // Stop immediately for scrubbing
+                  console.log("Video Metadata Loaded:", {
+                    duration: v.duration,
+                    videoWidth: v.videoWidth,
+                    videoHeight: v.videoHeight
+                  });
+                }}
+                onCanPlayThrough={() => setIsVideoReady(true)}
+                onWaiting={() => setIsVideoReady(false)}
+                onError={(e) => {
+                  const error = e.currentTarget.error;
+                  console.error("Video Error Details:", {
+                    code: error?.code,
+                    message: error?.message
+                  });
+                }}
               >
-                {/* Fallback for old browsers */}
+                <source src="/hero-bg.webm" type="video/webm" />
                 <source src="/hero-bg.mp4" type="video/mp4" />
               </video>
-              <div className="absolute inset-0 bg-pearl/30 backdrop-blur-[2px] brightness-110" />
-              <div className="absolute inset-0 bg-gradient-to-b from-pearl/40 via-transparent to-pearl" />
+
+              {/* Loading Indicator */}
+              {!isVideoReady && (
+                <div className="absolute inset-0 z-5 flex items-center justify-center bg-pearl/20 backdrop-blur-sm">
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.div 
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                      className="w-12 h-12 border-2 border-gold/30 border-t-gold rounded-full"
+                    />
+                    <span className="font-sans text-xs tracking-widest text-gold/60 uppercase">Cargando Experiencia</span>
+                  </div>
+                </div>
+              )}
+              
+              <div className="absolute inset-0 bg-pearl/10 backdrop-blur-[1px] brightness-105 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-b from-pearl/20 via-transparent to-pearl z-20" />
             </motion.div>
 
             <motion.div 
