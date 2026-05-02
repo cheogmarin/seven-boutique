@@ -201,6 +201,7 @@ export default function App() {
             >
               <video 
                 ref={videoRef}
+                src="/hero-bg.webm"
                 muted 
                 playsInline 
                 autoPlay
@@ -218,6 +219,11 @@ export default function App() {
                     videoWidth: v.videoWidth,
                     videoHeight: v.videoHeight
                   });
+                  // Match initial scroll position
+                  const initialProgress = scrollYProgress.get();
+                  if (v.duration) {
+                    v.currentTime = initialProgress * v.duration;
+                  }
                 }}
                 onCanPlayThrough={() => setIsVideoReady(true)}
                 onWaiting={() => setIsVideoReady(false)}
@@ -228,10 +234,7 @@ export default function App() {
                     message: error?.message
                   });
                 }}
-              >
-                <source src="/hero-bg.webm" type="video/webm" />
-                <source src="/hero-bg.mp4" type="video/mp4" />
-              </video>
+              />
 
               {/* Loading Indicator */}
               {!isVideoReady && (
