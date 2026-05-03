@@ -1,72 +1,83 @@
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
-import { Menu, X, Instagram, MapPin, Phone, Clock, Waves, Anchor, Wind } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { translations, Language } from "./translations";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu as MenuIcon, X, Anchor, Wind } from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "./i18n/useTranslation";
+import { Helmet } from "react-helmet-async";
+import Hero from "./components/Hero";
+import Essence from "./components/Essence";
+import Environments from "./components/Environments";
+import Menu from "./components/Menu";
+import Footer from "./components/Footer";
+
+interface Plate {
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+}
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenuCategory, setActiveMenuCategory] = useState<string | null>(null);
-  const [selectedPlate, setSelectedPlate] = useState<any>(null);
-  const [lang, setLang] = useState<Language>('es');
-  const heroRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [selectedPlate, setSelectedPlate] = useState<Plate | null>(null);
+  const { lang, t, changeLanguage } = useTranslation();
 
-  const t = translations[lang];
-
-  const [isVideoReady, setIsVideoReady] = useState(false);
-
-  useEffect(() => {
-    // Scroll to top on lang change or load
-    window.scrollTo(0, 0);
-
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-      // Pre-warm the video decoder
-      videoRef.current.play().then(() => {
-        videoRef.current?.pause();
-      }).catch(() => {
-         // Silently fail if auto-play policy blocks it
-      });
-    }
-  }, [lang]);
-
-  const { scrollY, scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-
-  useEffect(() => {
-    const updateVideoTime = (v: number) => {
-      const video = videoRef.current;
-      if (video && video.duration) {
-        // Even if readyState is low, we try to set currentTime
-        const targetTime = v * video.duration;
-        if (Math.abs(video.currentTime - targetTime) > 0.01) {
-          video.currentTime = targetTime;
-        }
-      }
-    };
-
-    // Initial sync
-    updateVideoTime(scrollYProgress.get());
-
-    const unsubscribe = scrollYProgress.on("change", updateVideoTime);
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-  
-  const yBg = useTransform(scrollY, [0, 800], ["0%", "25%"]);
-  const yText = useTransform(scrollY, [0, 600], ["0px", "300px"]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-
-  const toggleLanguage = (newLang: Language) => {
-    setLang(newLang);
+  const toggleLanguage = (newLang: 'es' | 'en') => {
+    changeLanguage(newLang);
   };
 
-  const whatsappUrl = `https://wa.me/584128388203?text=${encodeURIComponent(t.footer.whatsappMessage)}`;
+  const whatsappUrl = `https://wa.me/584121249249?text=${encodeURIComponent(t.footer.whatsappMessage)}`;
+  const currentUrl = typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}` : "";
 
   return (
     <div className="min-h-screen bg-pearl text-charcoal selection:bg-gold selection:text-white overflow-x-hidden pb-20 md:pb-0">
+      <Helmet>
+        <title>
+          {lang === 'es' 
+            ? 'Seven Restaurante Boutique | Alta Gastronomía y Exclusividad en Lechería' 
+            : 'Seven Restaurante Boutique | Fine Dining & Signature Cuisine in Lecheria'
+          }
+        </title>
+        <meta 
+          name="description" 
+          content={
+            lang === 'es' 
+              ? 'Descubre la mejor cocina de autor con excelencia en Seven Restaurante Boutique. Sabores del Caribe, Salón VIP y Gelatería artesanal en el Hotel Mare Mares. ¡Reserva hoy!' 
+              : 'Experience signature cuisine with excellence at Seven Restaurante Boutique. Caribbean flavors, VIP Lounge, and artisanal gelatos at Hotel Mare Mares. Book your table now.'
+          } 
+        />
+        <meta name="keywords" content="Restaurante Boutique Lechería, Cocina de Autor, Chef Francisco Ramos, Hotel Mare Mares, Cena de lujo Anzoátegui, Salón VIP para reuniones, Gelatería artesanal Lechería, Restaurante con Valet Parking, Comida de autor en el Caribe, Pulpo al Grill, Lomito Pimienta, Risotto Seven" />
+        <link rel="alternate" hrefLang="es" href={`${currentUrl}?lang=es`} />
+        <link rel="alternate" hrefLang="en" href={`${currentUrl}?lang=en`} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Restaurant",
+            "name": "Seven Restaurante Boutique",
+            "image": "https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Hotel Mare Mares",
+              "addressLocality": "Lechería",
+              "addressRegion": "Anzoátegui",
+              "addressCountry": "VE"
+            },
+            "servesCuisine": lang === 'es' ? "Cocina de Autor" : "Signature Cuisine",
+            "priceRange": "$$$",
+            "telephone": "+584121249249",
+            "slogan": lang === 'es' ? "Cocina de autor con excelencia" : "Signature cuisine with excellence"
+          })}
+        </script>
+      </Helmet>
+      
+      {/* Skip to main content link */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-gold text-white px-4 py-2 rounded z-50"
+      >
+        {lang === 'es' ? 'Saltar al contenido principal' : 'Skip to main content'}
+      </a>
+      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 w-full z-50 border-b border-gold/10 bg-pearl/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -80,6 +91,7 @@ export default function App() {
               alt="Logo" 
               className="w-8 h-8 object-contain"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
             SEVEN
           </motion.div>
@@ -100,8 +112,9 @@ export default function App() {
           <div className="flex items-center gap-4">
             {/* Language Switcher */}
             <div className="flex border border-gold overflow-hidden">
-              {(['es', 'en'] as Language[]).map((l) => (
+              {(['es', 'en'] as const).map((l) => (
                 <button
+                  type="button"
                   key={l}
                   onClick={() => toggleLanguage(l)}
                   className={`px-4 py-2 min-h-[44px] text-[10px] uppercase tracking-widest font-bold transition-colors duration-300 flex items-center justify-center ${
@@ -116,10 +129,13 @@ export default function App() {
             </div>
 
             <button 
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
               className="md:hidden text-charcoal p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
             </button>
           </div>
         </div>
@@ -129,6 +145,7 @@ export default function App() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -166,6 +183,7 @@ export default function App() {
               alt="Logo" 
               className="w-5 h-5 object-contain"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
             <span className="text-[8px] uppercase tracking-widest font-bold">SEVEN</span>
           </a>
@@ -191,126 +209,8 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <main className="relative">
-        <AnimatePresence mode="wait">
-          {/* Hero Section - Persistent for Ref stability */}
-          <section key="hero-stable" ref={heroRef} className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
-            <motion.div 
-              style={{ y: yBg }}
-              className="absolute top-0 left-0 w-full h-[120%] z-0 bg-neutral-200"
-            >
-              <video 
-                ref={videoRef}
-                src="/hero-bg.webm"
-                muted 
-                playsInline 
-                autoPlay
-                loop
-                preload="auto"
-                key="hero-video"
-                className={`w-full h-full object-cover relative z-0 transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
-                poster={t.hero.image}
-                onContextMenu={(e) => e.preventDefault()}
-                onLoadedMetadata={(e) => {
-                  const v = e.currentTarget;
-                  v.pause(); // Stop immediately for scrubbing
-                  console.log("Video Metadata Loaded:", {
-                    duration: v.duration,
-                    videoWidth: v.videoWidth,
-                    videoHeight: v.videoHeight
-                  });
-                  // Match initial scroll position
-                  const initialProgress = scrollYProgress.get();
-                  if (v.duration) {
-                    v.currentTime = initialProgress * v.duration;
-                  }
-                }}
-                onCanPlayThrough={() => setIsVideoReady(true)}
-                onWaiting={() => setIsVideoReady(false)}
-                onError={(e) => {
-                  const error = e.currentTarget.error;
-                  console.error("Video Error Details:", {
-                    code: error?.code,
-                    message: error?.message
-                  });
-                }}
-              />
-
-              {/* Loading Indicator */}
-              {!isVideoReady && (
-                <div className="absolute inset-0 z-5 flex items-center justify-center bg-pearl/20 backdrop-blur-sm">
-                  <div className="flex flex-col items-center gap-4">
-                    <motion.div 
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="w-12 h-12 border-2 border-gold/30 border-t-gold rounded-full"
-                    />
-                    <span className="font-sans text-xs tracking-widest text-gold/60 uppercase">Cargando Experiencia</span>
-                  </div>
-                </div>
-              )}
-              
-              <div className="absolute inset-0 bg-pearl/10 backdrop-blur-[1px] brightness-105 z-10" />
-              <div className="absolute inset-0 bg-gradient-to-b from-pearl/20 via-transparent to-pearl z-20" />
-            </motion.div>
-
-            <motion.div 
-              style={{ y: yText, opacity }}
-              className="relative z-10 text-center px-6"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={lang}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <span className="block text-charcoal text-xs md:text-sm uppercase tracking-[0.5em] mb-6 font-bold">
-                    {t.hero.subtitle}
-                  </span>
-                  <h1 className="text-4xl md:text-8xl font-display font-bold tracking-tighter mb-8 text-charcoal leading-[1.1] md:leading-none text-shadow-subtle">
-                    {t.hero.title} <br />
-                    <span className="text-gold italic font-normal">{t.hero.titleAccent}</span>
-                  </h1>
-                </motion.div>
-              </AnimatePresence>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="flex flex-col md:flex-row items-center justify-center gap-6"
-              >
-                <a 
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-10 py-4 bg-gold text-white font-bold uppercase tracking-[0.2em] text-xs hover:bg-charcoal transition-all duration-500 min-h-[44px] flex items-center justify-center shadow-md"
-                >
-                  {t.hero.ctaReserve}
-                </a>
-                <button 
-                  onClick={() => {
-                    const el = document.getElementById('menu');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="px-10 py-4 border border-gold/30 text-charcoal font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-white transition-all duration-500 min-h-[44px] flex items-center justify-center"
-                >
-                  {t.hero.ctaMenu}
-                </button>
-              </motion.div>
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute bottom-24 md:bottom-10 left-1/2 -translate-x-1/2 text-gold/50"
-            >
-              <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent" />
-            </motion.div>
-          </section>
-        </AnimatePresence>
+      <main id="main-content" className="relative">
+        <Hero lang={lang} t={t} whatsappUrl={whatsappUrl} />
 
         {/* Other Sections - Content fades on language change */}
         <AnimatePresence mode="wait">
@@ -322,299 +222,22 @@ export default function App() {
             transition={{ duration: 0.5 }}
           >
             {/* La Esencia */}
-            <section id="la-esencia" className="py-24 md:py-40 px-6 bg-pearl">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative aspect-[4/5] overflow-hidden shadow-2xl"
-                >
-                  <img 
-                    src={t.essence.image} 
-                    alt="Chef Ramos Essence" 
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 border-[12px] border-pearl/10" />
-                </motion.div>
+            <Essence lang={lang} t={t} />
 
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="space-y-8 md:space-y-12 text-left"
-                >
-                  <div className="flex gap-4 text-gold/30">
-                    <Anchor size={20} />
-                    <Waves size={20} />
-                  </div>
-                  <h2 className="text-gold text-xs uppercase tracking-[0.6em] font-bold">{t.essence.subtitle}</h2>
-                  <p className="text-2xl md:text-4xl font-display leading-[1.4] md:leading-relaxed tracking-[0.05em] text-charcoal">
-                    {t.essence.title}
-                  </p>
-                  <div className="w-20 h-[1px] bg-gold" />
-                  <p className="text-sm md:text-base text-charcoal/60 leading-loose tracking-widest uppercase font-medium">
-                    {t.essence.description}
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </section>
+            <Environments lang={lang} t={t} />
 
-          {/* Ambientes - Standard Grid Layout */}
-          <section id="ambientes" className="py-24 px-6 bg-pearl">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12 md:mb-20">
-                <h2 className="text-gold text-xs uppercase tracking-[0.6em] mb-4 font-bold">{t.environments.subtitle}</h2>
-                <h3 className="text-3xl md:text-6xl font-display font-bold text-charcoal leading-relaxed">{t.environments.title}</h3>
-              </div>
+            <Menu
+              lang={lang}
+              t={t}
+              activeMenuCategory={activeMenuCategory}
+              setActiveMenuCategory={setActiveMenuCategory}
+              setSelectedPlate={setSelectedPlate}
+            />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {t.environments.items.map((env, index) => {
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="relative group overflow-hidden h-[60vh] md:h-[70vh] shadow-sm"
-                    >
-                      <img 
-                        src={env.image} 
-                        alt={env.name}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                        referrerPolicy="no-referrer"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-charcoal/10 group-hover:bg-transparent transition-colors duration-500" />
-                      <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-pearl/90 to-transparent md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
-                        <h4 className="text-xl md:text-2xl font-display text-charcoal mb-2">{env.name}</h4>
-                        <p className="text-[10px] text-charcoal/70 uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 font-bold">
-                          {env.description}
-                        </p>
-                      </div>
-                      <div className="absolute top-0 left-0 w-full h-full border border-gold/0 group-hover:border-gold/10 transition-all duration-500 pointer-events-none" />
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-          {/* Menú Signature & Luxury Experience */}
-          <section id="menu" className="py-32 px-6 bg-dark-graphite text-white overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-24">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  <h2 className="text-gold text-xs uppercase tracking-[0.8em] mb-6 font-bold">{t.menu.subtitle}</h2>
-                  <h3 className="text-4xl md:text-7xl font-display font-bold text-white mb-8 tracking-widest leading-tight">
-                    {t.menu.title}
-                  </h3>
-                  <div className="w-24 h-[1px] bg-gold mx-auto mb-8" />
-                  <p className="text-white/40 text-xs uppercase tracking-[0.4em] max-w-xl mx-auto font-medium leading-relaxed">
-                    {t.menu.description}
-                  </p>
-                </motion.div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {Object.entries(t.menu.categories).map(([key, cat]: [string, any], index) => {
-                  const isActive = activeMenuCategory === key;
-                  
-                  return (
-                    <motion.div
-                      key={key}
-                      layout
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`relative group cursor-pointer overflow-hidden border border-gold/10 bg-dark-graphite transition-all duration-700 ${
-                        isActive ? "md:col-span-3 h-auto" : "h-[60vh] hover:border-gold/30"
-                      }`}
-                      onClick={() => setActiveMenuCategory(isActive ? null : key)}
-                    >
-                      {/* Background Visual */}
-                      <div className={`absolute inset-0 transition-transform duration-1000 ${isActive ? "opacity-20 blur-sm" : "group-hover:scale-105"}`}>
-                        <img 
-                          src={cat.image} 
-                          alt={cat.title} 
-                          className="w-full h-full object-cover"
-                          referrerPolicy="no-referrer"
-                        />
-                        <div className={`absolute inset-0 bg-dark-graphite/60 transition-colors duration-500 ${isActive ? "bg-dark-graphite/90" : ""}`} />
-                        <div className="absolute inset-0 bg-gold/5 mix-blend-overlay" />
-                      </div>
-
-                      {/* Content Overlay */}
-                      <div className={`relative z-10 p-12 h-full flex flex-col ${isActive ? "justify-start" : "justify-center text-center"}`}>
-                        <motion.span 
-                          layout 
-                          className="text-gold font-script text-4xl md:text-5xl mb-4 block"
-                        >
-                          {cat.title}
-                        </motion.span>
-                        <motion.h4 
-                          layout
-                          className="text-xl md:text-2xl font-display tracking-[0.2em] mb-4 text-white"
-                        >
-                          {cat.subtitle}
-                        </motion.h4>
-                        {!isActive && (
-                          <div className="h-4" />
-                        )}
-
-                        {/* Expanded Menu Detail */}
-                        <AnimatePresence>
-                          {isActive && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              className="mt-12 overflow-hidden"
-                            >
-                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                                {cat.sections.map((section: any, sIdx: number) => (
-                                  <div key={sIdx} className="space-y-8">
-                                    <h5 className="text-white bg-gold/10 px-4 py-2 inline-block text-[10px] uppercase tracking-[0.4em] font-black rounded-sm border-l-2 border-gold">
-                                      {section.name}
-                                    </h5>
-                                    <div className="space-y-10">
-                                      {section.items.map((item: any, iIdx: number) => (
-                                        <div 
-                                          key={iIdx} 
-                                          className="flex gap-4 group/item cursor-pointer"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            setSelectedPlate(item);
-                                          }}
-                                        >
-                                          <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 border border-gold/20 p-1 bg-dark-graphite">
-                                            <div className="w-full h-full rounded-full overflow-hidden">
-                                              <img 
-                                                src={item.image} 
-                                                alt={item.name} 
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover/item:scale-110"
-                                                referrerPolicy="no-referrer"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div className="flex-1 border-b border-gold/5 pb-4">
-                                            <div className="flex justify-between items-baseline mb-1">
-                                              <h6 className="text-xs uppercase tracking-[0.1em] text-white font-bold group-hover/item:text-gold transition-colors">
-                                                {item.name}
-                                              </h6>
-                                              <span className="text-gold font-display text-sm">{item.price}</span>
-                                            </div>
-                                            <p className="text-[10px] text-white/30 uppercase tracking-widest leading-relaxed">
-                                              {item.description ? (item.description.length > 40 ? item.description.substring(0, 40) + "..." : item.description) : "Selección Premium"}
-                                            </p>
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-
-                        {/* Interactive Hint */}
-                        <motion.div 
-                          className={`mt-12 flex justify-center text-gold transition-opacity duration-500 ${isActive ? "opacity-0" : "opacity-100"}`}
-                        >
-                          <div className="w-10 h-10 rounded-full border border-gold/30 flex items-center justify-center animate-bounce">
-                            <Anchor size={16} />
-                          </div>
-                        </motion.div>
-                      </div>
-                      
-                      {/* Border Glow */}
-                      <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/10 transition-colors pointer-events-none" />
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-          {/* Footer / Contact */}
-          <footer id="reservas" className="bg-pearl pt-24 pb-12 px-6 border-t border-gold/10">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-                <div className="md:col-span-2">
-                  <div 
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="mb-8 flex items-center gap-4 cursor-pointer group"
-                  >
-                    <div className="p-2 border border-gold/20 rounded-full group-hover:border-gold group-hover:bg-gold/5 transition-all duration-500">
-                      <img 
-                        src="https://i.ibb.co/CsvFqmFJ/LOGO-SOLO-doral.webp" 
-                        alt="Logo" 
-                        className="w-5 h-5 object-contain transition-transform duration-500 group-hover:scale-110"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
-                    <div className="flex items-baseline text-charcoal uppercase font-display font-bold tracking-[0.4em] group-hover:text-gold transition-colors duration-500">
-                      <span className="text-4xl leading-none">E</span>
-                      <span className="text-xl">
-                        {lang === 'es' ? 'sencia' : 'ssence'}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-charcoal/50 max-w-sm leading-loose tracking-widest text-[10px] uppercase font-semibold">
-                    {t.footer.description}
-                  </p>
-                </div>
-                
-                <div className="space-y-6">
-                  <h5 className="text-gold text-[10px] uppercase tracking-[0.4em] font-bold">{t.footer.location}</h5>
-                  <ul className="space-y-4 text-sm text-charcoal/70 tracking-wide">
-                    <li className="flex items-center gap-3"><MapPin size={16} className="text-gold" /> {t.footer.address}</li>
-                    <li className="flex items-center gap-3"><Phone size={16} className="text-gold" /> {t.footer.phone}</li>
-                    <li className="flex items-center gap-3"><Instagram size={16} className="text-gold" /> @seven_seafront</li>
-                  </ul>
-                </div>
-
-                <div className="space-y-6">
-                  <h5 className="text-gold text-[10px] uppercase tracking-[0.4em] font-bold">{t.footer.hours}</h5>
-                  <ul className="space-y-4 text-sm text-charcoal/70 tracking-wide">
-                    <li className="flex items-center gap-3"><Clock size={16} className="text-gold" /> {t.footer.days}</li>
-                    <li className="text-charcoal/40 italic text-xs mb-4">{t.footer.closed}</li>
-                  </ul>
-                  
-                  <div className="pt-6 border-t border-gold/10">
-                    <h5 className="text-gold text-[10px] uppercase tracking-[0.4em] font-bold mb-4">{t.footer.valetTitle}</h5>
-                    <ul className="space-y-2 text-xs text-charcoal/70 tracking-wide">
-                      <li>{t.footer.valetFriSat}</li>
-                      <li>{t.footer.valetSun}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-gold/10 gap-6">
-                <p className="text-[10px] text-charcoal/40 uppercase tracking-[0.2em] font-medium">
-                  {t.footer.rights}
-                </p>
-                <div className="flex gap-8 text-[10px] text-charcoal/40 uppercase tracking-[0.2em] font-medium">
-                  <a href="#" className="hover:text-gold transition-colors">{t.footer.privacy}</a>
-                  <a href="#" className="hover:text-gold transition-colors">{t.footer.terms}</a>
-                </div>
-              </div>
-            </div>
-          </footer>
-        </motion.div>
-      </AnimatePresence>
-    </main>
+            <Footer lang={lang} t={t} />
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
     {/* Plate Detail Modal */}
     <AnimatePresence>
@@ -635,7 +258,9 @@ export default function App() {
             className="relative w-full max-w-5xl bg-pearl rounded-sm overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto z-10"
           >
             <button 
+              type="button"
               onClick={() => setSelectedPlate(null)}
+            aria-label={lang === 'es' ? 'Cerrar detalle' : 'Close details'}
               className="absolute top-4 right-4 z-20 p-4 text-charcoal hover:text-gold transition-colors bg-pearl/90 backdrop-blur-sm rounded-full shadow-lg"
             >
               <X size={24} />
@@ -681,6 +306,7 @@ export default function App() {
 
                 <div className="pt-6 md:pt-12">
                   <button 
+                    type="button"
                     onClick={() => setSelectedPlate(null)}
                     className="w-full py-4 border border-gold text-gold font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold hover:text-white transition-all duration-500 rounded-sm shadow-xl"
                   >
