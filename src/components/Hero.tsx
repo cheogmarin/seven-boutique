@@ -15,6 +15,7 @@ export default function Hero({ lang, t, whatsappUrl }: HeroProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [hasUserActivatedVideo, setHasUserActivatedVideo] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
 
   const { scrollY, scrollYProgress } = useScroll({
     target: heroRef,
@@ -44,46 +45,52 @@ export default function Hero({ lang, t, whatsappUrl }: HeroProps) {
         style={{ y: yBg }}
         className="absolute top-0 left-0 w-full h-[120%] z-0 bg-neutral-200"
       >
-        <video 
-          ref={videoRef}
-          muted 
-          playsInline 
-          loop
-          preload="auto"
-          key="hero-video"
-          className={`w-full h-full object-cover relative z-0 transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
-          poster="/hero-fallback.webp"
-          onContextMenu={(e) => e.preventDefault()}
-          onLoadedMetadata={(e) => {
-            const v = e.currentTarget;
-            v.pause(); // Stop immediately for scrubbing
-            console.log("Video Metadata Loaded:", {
-              duration: v.duration,
-              videoWidth: v.videoWidth,
-              videoHeight: v.videoHeight
-            });
-            // Match initial scroll position
-            const initialProgress = scrollYProgress.get();
-            if (v.duration) {
-              v.currentTime = initialProgress * v.duration;
-            }
-          }}
-          onCanPlayThrough={() => setIsVideoReady(true)}
-          onPlay={() => setHasUserActivatedVideo(true)}
-          onWaiting={() => setIsVideoReady(false)}
-          onError={(e) => {
-            const error = e.currentTarget.error;
-            console.error("Video Error Details:", {
-              code: error?.code,
-              message: error?.message
-            });
-          }}
-        >
-          <source src="/hero-bg.webm" type="video/webm" />
-          <source src="/hero-bg.mp4" type="video/mp4" />
-          <source src="/hero-bg.ogv" type="video/ogg" />
-          Tu navegador no admite video, disfruta la imagen.
-        </video>
+        {!hasVideoError ? (
+          <video 
+            ref={videoRef}
+            muted 
+            playsInline 
+            loop
+            preload="auto"
+            key="hero-video"
+            className={`w-full h-full object-cover relative z-0 transition-opacity duration-700 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
+            poster="/hero-fallback.webp"
+            onContextMenu={(e) => e.preventDefault()}
+            onLoadedMetadata={(e) => {
+              const v = e.currentTarget;
+              v.pause(); // Stop immediately for scrubbing
+              console.log("Video Metadata Loaded:", {
+                duration: v.duration,
+                videoWidth: v.videoWidth,
+                videoHeight: v.videoHeight
+              });
+              // Match initial scroll position
+              const initialProgress = scrollYProgress.get();
+              if (v.duration) {
+                v.currentTime = initialProgress * v.duration;
+              }
+            }}
+            onCanPlayThrough={() => setIsVideoReady(true)}
+            onPlay={() => setHasUserActivatedVideo(true)}
+            onWaiting={() => setIsVideoReady(false)}
+            onError={(e) => {
+              const error = e.currentTarget.error;
+              console.error("Video Error Details:", {
+                code: error?.code,
+                message: error?.message
+              });
+              setHasVideoError(true);
+            }}
+          >
+            <source src="/hero-bg.webm" type="video/webm" />
+            Tu navegador no admite video, disfruta la imagen.
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/hero-fallback.webp)' }}
+          />
+        )}
 
         {/* Loading Indicator */}
         {!isVideoReady && (
